@@ -1,3 +1,5 @@
+import './CustomerFilters.css';
+
 type FilterProps = {
 	setNameFilter: (name: string) => void;
 	setCityFilter: (city: string) => void;
@@ -14,7 +16,7 @@ const CustomerFilters = ({
 	const uniqueCities = Array.from(new Set(cities));
 
 	return (
-		<div>
+		<div className="customerfilter">
 			{/* Textfield: Name filter input */}
 			<input
 				type="text"
@@ -23,7 +25,13 @@ const CustomerFilters = ({
 			/>
 
 			{/* Dropdown: City filter input */}
-			<select onChange={(e) => setCityFilter(e.target.value)}>
+			<select
+				onChange={(e) => {
+					setCityFilter(e.target.value);
+					e.target.className =
+						e.target.value === '' ? '' : 'city-selected';
+				}}
+			>
 				<option value="">Select City</option>
 				{uniqueCities.map((city) => (
 					<option key={city} value={city}>
@@ -32,12 +40,19 @@ const CustomerFilters = ({
 				))}
 			</select>
 
-			{/* Checkbox: Highlight oldest of cities */}
-			<label>
-				Highlight oldest user per city
+			{/* Checkbox: Highlight oldest customers of cities */}
+			<label htmlFor="highlightOldest" className="highlightOldestLabel">
+				Highlight oldest <br />
+				user per city
 				<input
+					id="highlightOldest"
 					type="checkbox"
-					onChange={(e) => setHighlightOldest(e.target.checked)}
+					onChange={(e) => {
+						setHighlightOldest(e.target.checked);
+						e.target.parentElement!.className = e.target.checked
+							? 'highlightOldestChecked'
+							: '';
+					}}
 				/>
 			</label>
 		</div>

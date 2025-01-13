@@ -1,0 +1,64 @@
+.customerfilter {
+	display: flex;
+	gap: 1.5rem;
+}
+
+/* #region Name & City input */
+.customerfilter input[type='text'],
+.customerfilter select {
+	padding: 1rem;
+	border: 2px solid #000;
+	font-size: 1rem;
+	flex: 1;
+	border-radius: 0.6rem;
+	background-color: white;
+}
+.customerfilter input[type='text']::placeholder,
+.customerfilter select {
+	opacity: 1;
+	color: #656565;
+	transition: color 0.15s ease;
+}
+.customerfilter .city-selected {
+	color: #213547;
+}
+
+.customerfilter input[type='text']:hover::placeholder {
+	color: #213547;
+}
+.customerfilter select:hover {
+	color: #213547;
+	border: 2px solid #000;
+}
+
+.customerfilter input[type='text']:focus,
+.customerfilter input[type='text']:focus::placeholder {
+	outline: none;
+}
+/* #endregion Name & City input */
+
+/* #region HighlightOldest checkbox */
+.customerfilter label {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	text-align: left;
+	font-size: 1rem;
+	font-weight: 500;
+	color: #656565;
+	cursor: pointer;
+	transition: color 0.15s ease;
+}
+.customerfilter label:hover {
+	color: #213547;
+}
+.customerfilter .highlightOldestChecked {
+	color: #213547;
+}
+
+.customerfilter input[type='checkbox'] {
+	width: 2rem;
+	aspect-ratio: 1/1;
+	accent-color: #213547;
+}
+/* #endregion HighlightOldest checkbox */

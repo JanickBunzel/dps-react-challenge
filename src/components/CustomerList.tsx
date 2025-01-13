@@ -1,3 +1,4 @@
+import './CustomerList.css';
 import { Customer } from '../models/Customer';
 
 type CustomerListProps = {
@@ -38,32 +39,39 @@ const CustomerList = ({ customers, highlightOldest }: CustomerListProps) => {
 	}
 
 	return (
-		<table>
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>City</th>
-					<th>Birthday</th>
-				</tr>
-			</thead>
-			<tbody>
-				{customers.map((customer) => (
-					<tr
-						key={customer.id}
-						className={
-							highlightOldest &&
-							oldestCustomerIds.has(customer.id)
-								? 'highlightOldest'
-								: ''
-						}
-					>
-						<td>{customer.name}</td>
-						<td>{customer.city}</td>
-						<td>{customer.birthday.toLocaleDateString('de-DE')}</td>
+		<>
+			<table className="customerlist">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>City</th>
+						<th>Birthday</th>
 					</tr>
-				))}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{customers.map((customer) => (
+						<tr
+							key={customer.id}
+							className={
+								highlightOldest &&
+								oldestCustomerIds.has(customer.id)
+									? 'highlightOldest'
+									: ''
+							}
+						>
+							<td>{customer.name}</td>
+							<td>{customer.city}</td>
+							<td>
+								{customer.birthday.toLocaleDateString('de-DE')}
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+			<label className="infoLabel">
+				Total matches: {customers.length}
+			</label>
+		</>
 	);
 };
 

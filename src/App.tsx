@@ -45,7 +45,7 @@ function App() {
 				</a>
 			</div>
 			<div className="home-card">
-				<h1>DPS CRM</h1>
+				<h2>DPS CRM (Batch #23) - Janick Bunzel</h2>
 				<CustomerFilters
 					setNameFilter={setNameFilter}
 					setCityFilter={setCityFilter}
