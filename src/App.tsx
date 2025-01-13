@@ -5,6 +5,7 @@ import { fetchAllCustomers } from './services/apiService';
 import { Customer } from './models/Customer';
 import CustomerFilters from './components/CustomerFilters';
 import CustomerList from './components/CustomerList';
+import useDebounce from './hooks/useDebounce';
 
 function App() {
 	// Customer Arrays (complete and filtered)
@@ -13,6 +14,7 @@ function App() {
 
 	// Filter parameters
 	const [nameFilter, setNameFilter] = useState('');
+	const debouncedNameFilter = useDebounce(nameFilter, 1000);
 	const [cityFilter, setCityFilter] = useState('');
 	const [highlightOldest, setHighlightOldest] = useState(false);
 
@@ -22,9 +24,9 @@ function App() {
 	}, []);
 
 	// Filter customers for inputed name
-	if (nameFilter) {
+	if (debouncedNameFilter) {
 		filteredCustomers = filteredCustomers.filter((u) =>
-			u.name.toLowerCase().includes(nameFilter.toLowerCase())
+			u.name.toLowerCase().includes(debouncedNameFilter.toLowerCase())
 		);
 	}
 
