@@ -1,4 +1,10 @@
-import { Customer } from '../models/Customer';
+import { Customer, customerSchema } from '../models/Customer';
+import { z } from 'zod';
+
+// Schema for the expected dummyjson response
+const responseSchema = z.object({
+	users: customerSchema.array(),
+});
 
 /**
  * Fetches all customers (no limit) from the dummyjson API and returns the parsed Customer Array
@@ -9,18 +15,12 @@ export const fetchAllCustomers = async (): Promise<Customer[]> => {
 		const response = await fetch('https://dummyjson.com/users?limit=0');
 		if (!response.ok)
 			throw new Error('Failed to load data from dummyjson.com');
-		const data = await response.json();
+		const data = (await response.json()) as unknown;
 
-		// Parse response data to Customer model
-		return data.users.map(
-			(user: any): Customer => ({
-				id: user.id,
-				name: `${user.firstName} ${user.lastName}`,
-				city: user.address.city,
-				birthday: new Date(user.birthDate),
-			})
-		) as Customer[];
+		// Parse JSON Data to Customer type safely
+		return responseSchema.parse(data).users;
 	} catch (error) {
+		// On Error, return empty Array of Customers
 		console.error('Error on Api Call fetchCustomers', error);
 		return [];
 	}
