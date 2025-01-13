@@ -37,7 +37,7 @@
 
 .customerlist .highlightOldest {
 	background-color: #a4d8ff;
-	outline: 2px solid #4076d7;
+	box-shadow: 0 0 0 2px #4076d7;
 }
 /* #endregion Table(CustomerList) of customers */
 
