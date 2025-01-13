@@ -1,3 +1,4 @@
+import { parse } from 'date-fns';
 import { z } from 'zod';
 
 /**
@@ -9,13 +10,13 @@ export const customerSchema = z
 		firstName: z.string(),
 		lastName: z.string(),
 		address: z.object({ city: z.string() }),
-		birthDate: z.date({ coerce: true }),
+		birthDate: z.string(),
 	})
 	.transform((c) => ({
 		id: c.id,
 		name: `${c.firstName} ${c.lastName}`,
 		city: c.address.city,
-		birthday: c.birthDate,
+		birthday: parse(c.birthDate, 'yyyy-M-d', new Date()),
 	}));
 
 /**
