@@ -46,3 +46,7 @@
 .read-the-docs {
 	color: #888;
 }
+
+.highlightOldest {
+	background-color: lightblue; /* TODO: Replace placeholder with actual UI */
+}

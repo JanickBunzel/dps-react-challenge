@@ -7,33 +7,33 @@ import CustomerFilters from './components/CustomerFilters';
 import CustomerList from './components/CustomerList';
 
 function App() {
+	// Customer Arrays (complete and filtered)
 	const [customers, setCustomers] = useState<Customer[]>([]);
-	const [filteredCustomers, setFilteredCustomers] = useState<Customer[]>([]);
+	let filteredCustomers = [...customers];
+
+	// Filter parameters
 	const [nameFilter, setNameFilter] = useState('');
 	const [cityFilter, setCityFilter] = useState('');
-	const [highlightOldest, setHighlightOldest] = useState(false); // TODO: Implement highlightOldest functionality
+	const [highlightOldest, setHighlightOldest] = useState(false);
 
+	// Load all customers on mount
 	useEffect(() => {
 		fetchAllCustomers().then((data) => setCustomers(data));
 	}, []);
 
-	useEffect(() => {
-		let filtered = [...customers];
+	// Filter customers for inputed name
+	if (nameFilter) {
+		filteredCustomers = filteredCustomers.filter((u) =>
+			u.name.toLowerCase().includes(nameFilter.toLowerCase())
+		);
+	}
 
-		// Filter for name
-		if (nameFilter) {
-			filtered = filtered.filter((u) =>
-				u.name.toLowerCase().includes(nameFilter.toLowerCase())
-			);
-		}
-
-		// Filter for city
-		if (cityFilter) {
-			filtered = filtered.filter((u) => u.city === cityFilter);
-		}
-
-		setFilteredCustomers(filtered);
-	}, [nameFilter, cityFilter, customers]);
+	// Filter customers for selected city
+	if (cityFilter) {
+		filteredCustomers = filteredCustomers.filter(
+			(u) => u.city === cityFilter
+		);
+	}
 
 	return (
 		<>
@@ -48,9 +48,12 @@ function App() {
 					setNameFilter={setNameFilter}
 					setCityFilter={setCityFilter}
 					setHighlightOldest={setHighlightOldest}
-					cities={[...new Set(customers.map((u) => u.city))]}
+					cities={customers.map((u) => u.city)}
 				/>
-				<CustomerList customers={filteredCustomers} />
+				<CustomerList
+					customers={filteredCustomers}
+					highlightOldest={highlightOldest}
+				/>
 			</div>
 		</>
 	);
