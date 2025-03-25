@@ -20,7 +20,7 @@ function App() {
 
 	// Load all customers on mount
 	useEffect(() => {
-		fetchAllCustomers().then((data) => setCustomers(data));
+		fetchAllCustomers().then(setCustomers);
 	}, []);
 
 	// Filter customers for inputed name
